@@ -1,0 +1,22 @@
+body {
+	color: #61443e;
+	font-family:Monospace;
+	font-size:13px;
+	text-align:center;
+	background-color: #aaccff;
+	margin: 0px;
+	overflow: hidden;
+}
+#info {
+	color: #000000;
+	position: absolute;
+	top: 0px; width: 100%;
+	padding: 5px;
+}
+a {
+	color: #6D282A;
+}
+#oldie {
+	background:rgb(0,0,50) !important;
+	color:#fff !important;
+}
