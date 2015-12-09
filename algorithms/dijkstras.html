@@ -1,0 +1,41 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../style.css">
+	<head>
+		<title>dijkstras</title>
+		<style>
+		</style>
+	</head> 
+	<body>
+		<div id="info">Start clicking on the black pearls to see Dijkstras algorithm.
+		</div>
+		<script type="x-shader/x-vertex" id="vertexShader">
+			varying vec3 vWorldPosition;
+			void main() {
+				vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+				vWorldPosition = worldPosition.xyz;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			}
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentShader">
+			uniform vec3 topColor;
+			uniform vec3 bottomColor;
+			uniform float offset;
+			uniform float exponent;
+			varying vec3 vWorldPosition;
+			void main() {
+				float h = normalize( vWorldPosition + offset ).y;
+				gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+			}
+		</script>
+		<script type="text/javascript" src="scripts/three.min.js"></script>
+        <script type="text/javascript" src="scripts/graph.js"></script>
+		<script type="text/javascript" src="scripts/OrbitControls.js"></script>
+		<script type="text/javascript" src="scripts/TextGeometry.js"></script>
+		<script type="text/javascript" src="scripts/FontUtils.js"></script>
+		<script type="text/javascript" src="scripts/helvetiker_regular.typeface.js"></script>
+		<script type="text/javascript" src="dijkstras.js"></script>
+
+	</body>
+
+</html>

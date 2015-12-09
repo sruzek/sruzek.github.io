@@ -1,4 +1,4 @@
-//scene.js 
+// skipchain.js
 
 "use strict";
 
@@ -12,16 +12,21 @@ var camera, mapCamera;
 
 var sky, sunSphere;
 
-var spotLight, dirLight;
+var spotLight, dirLight, hemiLight;
+
+var line;
+var MAX_POINTS = 500;
+var drawCount;
 
 init();
 animate();
 
 function init() {
 	scene = new THREE.Scene();
+	// scene.fog = new THREE.Fog(0x492762, 10, 250);
 
 	camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000000);
-	camera.position.set(0, 20, 100);
+	camera.position.set(0, 40, 80);
 	camera.lookAt(scene.position);
 	scene.add(camera);
 
@@ -46,7 +51,10 @@ function init() {
 	renderer.autoClear = false;
 
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
-	controls.autoRotate = true;
+	controls.maxPolarAngle = Math.PI/2;
+	controls.maxDistance = 100;
+	controls.minDistance = 10;
+	// controls.autoRotate = true;
 
 	window.addEventListener( 'resize', onWindowResize, false );
 
@@ -56,41 +64,9 @@ function init() {
     initLights();
     ground();
 
-    var g = new Graph();
-
-    g.edgeFactory.build = function(source, target) {
-		var e = new AbstractEdge();
-		e.source = source;
-		e.target = target;
-		e.weight = Math.floor(Math.sin(Math.random()) * 10) + 1;
-		return e;
-    }
-
-    g.addEdge("start", "end");
-    g.addEdge("start", "second");
-    g.addEdge("second", "end");
-    g.addEdge("start", "middle");
-
-    dijkstra(g, g.nodes["start"]);
-
     draw();
 }
 
-// function draw(g){
-//     console.log(g.edges);
-//     for(e in g.edges) {
-//         if(g.edges[e].target.predecessor === g.edges[e].source || g.edges[e].source.predecessor === g.edges[e].target) {
-//             g.edges[e].color(0xffffff);   // = "#bfa";
-//             g.edges[e].color(0xffffff);     // = "#56f";
-//         } else {
-//             g.edges[e].color(0xfab0b5);     // = "#aaa";
-//         }
-//     }
-// }
-// 
-    // var mesh = new THREE.Mesh(g, material);
-
-// var nums = [1, 9, 5, 6, 6, 1, 8];
 var nums = [];
 var shapes = [];
 
@@ -104,6 +80,11 @@ function drand(){
 
 function draw() {
 	nums = drand();
+	// nums = [1, 9, 5, 6, 6, 1, 8];
+	// nums = [4.5, 0.5, 9, 4, 11.5, 16, 0.5, 3.5, 1.5, 17, 32.5, 17.5, 1];
+	// nums = [4, 5, 3, 7, 2, 10, 5, 6, 7, 1, 2, 7, 8];
+		// []
+	// nums = [9, 1, 1, 9];
 	shapes = []
 	for (var i = 0; i < nums.length; i++){
 		var g = new THREE.SphereGeometry(1, 8, 8);
@@ -111,59 +92,143 @@ function draw() {
 		var material = new THREE.MeshLambertMaterial( { color: c, wireframe: true });
 		var temp = new THREE.Mesh(g, material);
 		temp.scale.set(nums[i]/3, nums[i]/3, nums[i]/3);
-		temp.position.x = i*6 - 35;
+		temp.position.x = i*7 - (nums.length*3);
 	    temp.position.y = 3;
 	    temp.position.z = 0;
+	    temp.castShadow = true;
 	    scene.add(temp);
 	    shapes.push(temp);
 	}
+
 	skipchain(nums, shapes, nums.length);
 }
 
 function skipchain(nums, shapes, size, i) {
 	var sol = [];
-	var s;
+	var output = [];
+	var k = 1;
+	console.log('nums=', nums);
 	for (var i = 0; i < size; i++){
 		if (i == 0){
 			sol[0] = nums[0];
-			shapes[0].position.z += 5;
 		}
 		else if (i == 1){
-			s = Math.max(sol[0], nums[1]);
-			console.log(sol[0], nums[1]);
-			if (s == nums[1]){
-				sol[1] = s;
-				shapes[0].position.z -= 5;
-				shapes[1].position.z += 5;
+			if (nums[0] > nums[1]){
+				sol[1] = nums[0];
+				shapes[0].position.z +=10;
+				output[k] = 0;
+				k++;
+			}
+			else{
+				sol[1] = nums[1];
+				shapes[1].position.z +=10;
+				output[k] = 0;
+				k++;
 			}
 		}
 		else{
-			console.log('made it to else');
-			s = Math.max(sol[i-2]+nums[i], sol[i-1]);
-			console.log(sol[i-2], nums[i], sol[i-1]);
-			console.log(s);
-			if (s == sol[i-2]+nums[i]){
-				console.log('s == sol[i-2]+nums[i]');
-				shapes[i-1].position.z -=5;
-				shapes[i-2].position.z += 5;
-				shapes[i].position.z += 5;
+			console.log(nums[i]);
+			if (sol[i-1] > sol[i-2]+nums[i]){
+				sol[i] = sol[i-1];
+				if (shapes[i-2].position.z == 10){
+					shapes[i-2].position.z -=10;
+				}
 			}
-			if (s == sol[i-1]){
-				console.log('s == sol[i-1]');
-				shapes[i-2].position.z -=5;
-				shapes[i-1].position.z +=5;
+			else{
+				sol[i] = sol[i-2]+nums[i];
+				shapes[i].position.z += 10;
+				if (shapes[i-1].position.z == 10 && shapes[i-2].position.z == 10){
+				// 	// if (shapes[i-2].position.z == 10 || shapes[i].position.z == 10){
+						shapes[i-1].position.z -=10;
+				// 	// }
+				}
 			}
-			sol[i] = s;
-
 		}
+		console.log('sol[',i,']=', sol[i]);
 	}
+	drawEdges(shapes);
+	text(nums, shapes, sol);
 }
 
+function text(nums, shapes, sol){
+	var group = new THREE.Group();
+	for (var t = 0; t < nums.length; t++){
+		var theText = nums[t];
+		var hash = document.location.hash.substr( 1 );
+		if ( hash.length !== 0 ) {
+			theText = hash;
+		}
+		var text3d = new THREE.TextGeometry( theText, {
+			size: 2,
+			height: 0.3,
+			curveSegments: 10,
+			font: "helvetiker"
 
+		});
+		text3d.computeBoundingBox();
+	var centerOffset = -0.5 * ( text3d.boundingBox.max.x - text3d.boundingBox.min.x );
+		// var c = new THREE.Color(nums[i]/10, nums[i]/10, nums[i]/10);
+		var material = new THREE.MeshFaceMaterial( [
+			new THREE.MeshPhongMaterial( { color: 0x9984A8 } ),
+			// new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, overdraw: 0.5 } ),
+			new THREE.MeshPhongMaterial( { color: 0x9984A8, overdraw: 0.5 } )
+		] );
+
+		text = new THREE.Mesh( text3d, material );
+
+		text.position.x = shapes[t].position.x + centerOffset;
+		text.position.y = shapes[t].position.y + nums[t]/2;
+		text.position.z = shapes[t].position.z;
+
+		text.rotation.x = 0;
+		text.rotation.y = Math.PI * 2;
+
+		group.add( text );
+	}
+
+	scene.add( group );
+}
+
+function drawEdges(shapes){
+	var geometry = new THREE.BufferGeometry();
+
+	var positions = new Float32Array( MAX_POINTS * 3 ); 
+	geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+
+	drawCount = 2*(shapes.length-1);
+	geometry.setDrawRange( 0, drawCount );
+
+	var material = new THREE.LineBasicMaterial( { color: 0xC4B8CD, linewidth: 2 } );
+
+	line = new THREE.Line( geometry,  material );
+	scene.add( line );
+
+	updatePositions();
+}
+
+function updatePositions() {
+
+	var positions = line.geometry.attributes.position.array;
+
+	var index = 0;
+
+	for ( var i = 0, l = shapes.length-1; i < l; i ++ ) {
+
+		positions[ index ++ ] = shapes[i].position.x;
+		positions[ index ++ ] = shapes[i].position.y;
+		positions[ index ++ ] = shapes[i].position.z;
+
+		positions[ index ++ ] = shapes[i+1].position.x;
+		positions[ index ++ ] = shapes[i+1].position.y;
+		positions[ index ++ ] = shapes[i+1].position.z;
+
+	}
+
+}
 
 function ground() {
-	var groundgeo = new THREE.PlaneGeometry(200, 100, 10, 10);
-	var groundmat = new THREE.MeshPhongMaterial({color: 0x6d282a, vertexColors: THREE.VertexColors});
+	var groundgeo = new THREE.PlaneGeometry(400, 200, 10, 10);
+	var groundmat = new THREE.MeshPhongMaterial({color: 0x492762, vertexColors: THREE.VertexColors});
 	var ground = new THREE.Mesh(groundgeo, groundmat);
 	ground.position.y = -0.5;
 	ground.material.side = THREE.DoubleSide;
@@ -178,7 +243,7 @@ function initLights() {
     scene.add(ambLight);
 
 	var sunLight = new THREE.SpotLight( 0xffffff, 0.3, 0, Math.PI/2, 1 );
-	sunLight.position.set( 1000, 2000, -1000 );
+	sunLight.position.set( 500, 1000, -500 );
 	sunLight.castShadow = true;
 	sunLight.shadowBias = -0.0002;
 	sunLight.shadowCameraNear = 750;
@@ -193,7 +258,6 @@ function initSky() {
 	sky = new THREE.Sky();
 	scene.add( sky.mesh );
 
-	// Add Sun Helper
 	sunSphere = new THREE.Mesh(
 		new THREE.SphereGeometry( 5000, 16, 16 ),
 		new THREE.MeshBasicMaterial( { color: 0xffffff } )
@@ -220,7 +284,6 @@ function initSky() {
 }
 
 function initHelpers() {
-	//helper to show where the ground is
 	var gridHelper = new THREE.GridHelper( 200, 10 );
 	gridHelper.setColors(0xffffff, 0x404040);
 	scene.add( gridHelper );
@@ -229,6 +292,9 @@ function initHelpers() {
 var i = 0;
 function animate() {
     requestAnimationFrame( animate );
+
+
+
 	render();		
 	update();
 }

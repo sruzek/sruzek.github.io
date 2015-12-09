@@ -1,10 +1,4 @@
 /*
- * Various algorithms and data structures, licensed under the MIT-license.
- * (c) 2010 by Johann Philipp Strathausen <strathausen@gmail.com>
- * http://strathausen.eu
- *
- */
-/*
         Bellman-Ford
     Path-finding algorithm, finds the shortest paths from one node to all nodes.   
         Complexity       
@@ -13,7 +7,7 @@
     Can run on graphs with negative edge weights as long as they do not have
     any negative weight cycles. 
  */
- 
+
 function bellman_ford(g, source) {
 
     /* STEP 1: initialisation */
@@ -70,7 +64,7 @@ function dijkstra(g, source) {
     source.distance = 0;
     /* set of unoptimized nodes, sorted by their distance (but a Fibonacci heap
        would be better) */
-    var q = new BinaryMinHeap(g.nodes, "distance");
+    var q = new BinaryMinHeap(shapes, "distance");
 
     /* pointer to the node in focus */
     var node;
@@ -80,7 +74,6 @@ function dijkstra(g, source) {
     while(q.min() != undefined) {
         /* remove the latest */
         node = q.extractMin();
-        console.log(node);
         node.optimized = true;
 
         /* no nodes accessible from this one, should not happen */
