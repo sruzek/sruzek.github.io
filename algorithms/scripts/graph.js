@@ -1,14 +1,8 @@
-//seattle ruzek cs4250 final
 //graph.js
-//data structure to hold the graph
+//data structure to hold a weighted graph
 //based off of http://graphdracula.net code but without jquery
 
-
-
 var Graph = (function (undefined) {
-    this.nodes = [1, 2, 3];
-    this.getedges = [];
-
 
     var extractKeys = function (obj) {
         var keys = [], key;
@@ -163,16 +157,6 @@ var Graph = (function (undefined) {
         return this.connectors;
 
     }
-
-    // Graph.findShortestPath = function (map, start, end) {
-    //     if (Object.prototype.toString.call(start) === '[object Array]') {
-    //         return findShortestPath(map, start);
-    //     } else if (arguments.length === 3) {
-    //         return findShortestPath(map, [start, end]);
-    //     } else {
-    //         return findShortestPath(map, toArray(arguments, 1));
-    //     }
-    // }
     return Graph;
 
 })();

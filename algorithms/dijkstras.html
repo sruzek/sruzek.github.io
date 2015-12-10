@@ -1,12 +1,16 @@
 <html>
 <link rel="stylesheet" type="text/css" href="../style.css">
 	<head>
-		<title>dijkstras</title>
-		<style>
-		</style>
+		<title>Dijkstra's 3D</title>
 	</head> 
 	<body>
-		<div id="info">Start clicking on the black pearls to see Dijkstras algorithm.
+		<div id="info">
+			<h3>Colors the shortest path from one node to another using Dijkstra's algorithm.</h3>
+		</div>
+		<div id="path">
+			<br><br>
+			Node 33 is the first node (colored white).<br>
+			Click any black node to see the shortest path.
 		</div>
 		<script type="x-shader/x-vertex" id="vertexShader">
 			varying vec3 vWorldPosition;
@@ -36,6 +40,10 @@
 		<script type="text/javascript" src="scripts/helvetiker_regular.typeface.js"></script>
 		<script type="text/javascript" src="dijkstras.js"></script>
 
+		<div id="footer">
+			Powered by <a href="http://threejs.org" target="_blank">three.js</a><br>
+			View source on <a href="https://github.com/sr640712/sr640712.github.io" target="_blank">GitHub</a>
+		</div>
 	</body>
 
 </html>

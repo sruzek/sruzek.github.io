@@ -1,6 +1,4 @@
 // dijkstras.js
-// seattle ruzek
-// cs4250 final
 
 "use strict";
 
@@ -22,12 +20,11 @@ var sky, sunSphere;
 var spotLight, dirLight, hemiLight, light1, light2, light3, light4, light5, light6;
 var light1go = false, light2go = false, light3go = false, light4go = false, light5go = false, light6go = false;
 
-var nums = [];
 var shapes = [];
+var paths = [];
 var dgraph;
 
 var texloader = new THREE.TextureLoader();
-
 
 init();
 animate();
@@ -77,8 +74,6 @@ function init() {
 	renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
 
-	// initHelpers();
-
 	initSky();
     initLights();
     ground();
@@ -89,7 +84,7 @@ function init() {
 function draw() {
 	var group = new THREE.Group();
 	var dmap = {};
-	var numNodes = 40;
+	var numNodes = 20;
 
 	shapes = []
 
@@ -101,6 +96,7 @@ function draw() {
 		 	temp.position.x = 500; //basepos[0] - 100;
 		 	temp.position.y =  5;
 		 	temp.position.z = 500; 
+		 	temp.material.color.setHex(0xffffff);  //set the color of the starting one to white
 		}
 		else if (i == numNodes-1){
 			temp.position.x =  200;  //-300*(0.8+Math.random());
@@ -120,7 +116,7 @@ function draw() {
 	 	shapes.push(temp);
 	}
 
- 	for (var i = 0; i < shapes.length; i++){
+ 	for (var i = 0; i < shapes.length; i++){   //making the map for the shapes
  		dmap[shapes[i].id] = {};
 
  		for (var j = 1; j < shapes.length; j++){
@@ -157,27 +153,72 @@ function draw() {
 	scene.add(line);
 }
 
+var visited = {};
 function path(dgraph, start, end){
 
 	var SPlineMaterial = new THREE.LineBasicMaterial( { color: Math.random() * 0xffffff, linewidth: 2 } );
 	var SPlineGeometry = new THREE.Geometry();
 
 	var shortestpath = dgraph.findShortestPath(start, end);
-	console.log(shortestpath);
 
+	var d = 0;
 	for (var i = 0; i < shortestpath.length-1; i++){
 		var from = shortestpath[i];
+		if (!(shortestpath[i] in visited)){
+			visited[shortestpath[i]] = true;
+		}
 		var to = shortestpath[i+1];
+		if (!(shortestpath[i+1] in visited)){
+			visited[shortestpath[i+1]] = true;
+		}
 		var fromObj = scene.getObjectById(parseInt(from), true);
 		var toObj = scene.getObjectById(parseInt(to), true);
 		SPlineGeometry.vertices.push(fromObj.position, toObj.position);
+		d+=dist(fromObj.position, toObj.position);
 			
 		fromObj.material.color.setHex(0xffffff);
-
 	}
+
+	document.getElementById('path').innerHTML = printp(d);
+
+	function printp(d){
+		var whattoprint = "<br><br>Distance from " + start + " to " + end + ": " + Math.floor(d) + "<br>";
+		for (var i = 0; i < shortestpath.length-1; i++){
+			if (i == shortestpath.length-2){
+				whattoprint += shortestpath[i] + " -> " + shortestpath[i+1];
+			}
+			else{
+				whattoprint += shortestpath[i] + " -> ";
+			}
+		}
+		whattoprint += "<br>Click another black node to see another path.";
+		return whattoprint
+	}
+
+	var vkeys = Object.keys(visited); 
+
+	console.log(visited, vkeys.length);
 
 	var spspline = new THREE.Line(SPlineGeometry, SPlineMaterial);
 	scene.add(spspline);
+
+	paths.push(spspline);
+
+	if (vkeys.length == shapes.length){
+		document.getElementById('path').innerHTML = "<br><br>you selected all the nodes!<br>Click <a onclick=startOver();> here </a> to play again!";
+	}
+}
+
+function startOver() {
+	for (var i = 0; i < paths.length; i++){
+		scene.remove(paths[i]);
+	}
+	for (var i = 1; i < shapes.length; i++){
+		shapes[i].material.color.setHex(0x000000);
+	}
+	selected = [scene.getObjectById(33, true)]; 
+	visited = {};
+	document.getElementById('path').innerHTML = "<br><br>Node 33 is the first node (colored white).<br>Click any black node to see the shortest path.";
 }
 
 function dist(t0, t1){
@@ -188,6 +229,10 @@ function dist(t0, t1){
 	var distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 
 	return distance;
+}
+
+function pathtext(from, to){
+
 }
 
 function text(shapes){
@@ -207,7 +252,6 @@ function text(shapes){
 		});
 		text3d.computeBoundingBox();
 		var centerOffset = -0.5 * ( text3d.boundingBox.max.x - text3d.boundingBox.min.x );
-		// var c = new THREE.Color(nums[i]/10, nums[i]/10, nums[i]/10);
 		var material = new THREE.MeshFaceMaterial( [
 			new THREE.MeshPhongMaterial( { color: 0x9984A8 } ),
 			// new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, overdraw: 0.5 } ),
@@ -225,21 +269,19 @@ function text(shapes){
 
 		group.add( text );
 	}
-
 	scene.add( group );
 }
 
 function ground() {
-
-
 	var groundgeo = new THREE.BoxGeometry(18000, 14000, 10, 10);
 	var groundtex = texloader.load('../images/marble.jpg');
+
 	groundtex.repeat.set(5, 5);
 	groundtex.wrapS = groundtex.wrapT = THREE.RepeatWrapping; 
-    // groundtex.magFilter = THREE.NearestFilter;
-    // groundtex.format = THREE.RGBFormat;
+    groundtex.magFilter = THREE.NearestFilter;
+    groundtex.format = THREE.RGBFormat;
 
-	var groundmat = new THREE.MeshPhongMaterial({map:groundtex});  //{shininess: 80, color: 0x1F0631, specular:0xffffff, vertexColors: THREE.VertexColors});
+	var groundmat = new THREE.MeshPhongMaterial({map:groundtex, vertexColors: THREE.VertexColors});  //{shininess: 80, color: 0x1F0631, specular:0xffffff, vertexColors: THREE.VertexColors});
 	var ground = new THREE.Mesh(groundgeo, groundmat);
 	ground.position.y = -10;
 	ground.position.x = 450;
@@ -285,11 +327,11 @@ function addLights(){
 	scene.add( new THREE.AmbientLight( 0x111111 ) );
 
 	var intensity = 10;
-	var distance = 200;
-	var c1 = Math.random() * 0xff0040, c2 = Math.random() * 0x0040ff, c3 = Math.random() * 0x80ff80, c4 = Math.random() * 0xffaa00, c5 = Math.random() * 0x00ffaa, c6 = Math.random() * 0xff1100;
-	//var c1 = 0xffffff, c2 = 0xffffff, c3 = 0xffffff, c4 = 0xffffff, c5 = 0xffffff, c6 = 0xffffff;
+	var distance = 150;
+	// var c1 = Math.random() * 0xff0040, c2 = Math.random() * 0x0040ff, c3 = Math.random() * 0x80ff80, c4 = Math.random() * 0xffaa00, c5 = Math.random() * 0x00ffaa, c6 = Math.random() * 0xff1100;
+	var c1 =  Math.random() * 0xffffff, c2 = Math.random() * 0xffffff, c3 = Math.random() * 0xffffff, c4 = Math.random() * 0xffffff, c5 = Math.random() * 0xffffff, c6 = Math.random() * 0xffffff;
 
-	var sphere = new THREE.SphereGeometry( 0.25, 16, 8 );
+	var sphere = new THREE.SphereGeometry(0.1, 16, 8 );
 
 	light1 = new THREE.PointLight( c1, intensity, distance );
 	light1.position.y = 100;
@@ -351,13 +393,6 @@ function initSky() {
 
 	var sky = new THREE.Mesh( skyGeo, skyMat );
 	scene.add( sky );
-}
-
-function initHelpers() {
-	//helper to show where the ground is
-	var gridHelper = new THREE.GridHelper( 200, 10 );
-	gridHelper.setColors(0xffffff, 0x404040);
-	scene.add( gridHelper );
 }
 
 var i = 1;
@@ -434,8 +469,8 @@ function onDocumentMouseMove( event ) {
 	raycaster.setFromCamera( mouse, camera );
 }
 
+var selected = [scene.getObjectById(33, true)];  //sets the start node
 
-var selected = [];
 function onDocumentMouseDown( event ) {
 	event.preventDefault();
 
@@ -444,7 +479,7 @@ function onDocumentMouseDown( event ) {
 	var intersects = raycaster.intersectObjects( shapes );
 
 	if ( intersects.length > 0 ) {
-		SELECTED = intersects[ 0 ].object;
+		SELECTED = intersects[ 0 ].object;	
 		SELECTED.material.color.setHex( 0xffffff );
 		selected.push(intersects[0].object);
 		if (selected.length == 2){
