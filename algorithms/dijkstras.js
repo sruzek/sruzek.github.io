@@ -96,7 +96,7 @@ function init() {
 function draw() {
 	var group = new THREE.Group();
 	var dmap = {};
-	var numNodes = 40;
+	var numNodes = 20;
 
 	shapes = []
 
@@ -228,7 +228,7 @@ function startOver() {
 	for (var i = 1; i < shapes.length; i++){
 		shapes[i].material.color.setHex(0x000000);
 	}
-	selected = [shapes[0]];; 
+	selected = [shapes[0]];
 	visited = {};
 	document.getElementById('path').innerHTML = "<br><br>Node 33 is the first node (colored white).<br>Click any black node to see the shortest path.";
 }
