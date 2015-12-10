@@ -96,7 +96,7 @@ function init() {
 function draw() {
 	var group = new THREE.Group();
 	var dmap = {};
-	var numNodes = 20;
+	var numNodes = 40;
 
 	shapes = []
 
