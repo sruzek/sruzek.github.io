@@ -15,6 +15,8 @@ var mapWidth = 250, mapHeight = 170;
 
 var camera, mapCamera;
 
+var backgroundSound, pathSound;
+
 var sky, sunSphere;
 
 var spotLight, dirLight, hemiLight, light1, light2, light3, light4, light5, light6;
@@ -33,7 +35,6 @@ function init() {
 	scene = new THREE.Scene();
 	scene.fog = new THREE.Fog( 0xffffff, 1, 5000 );
 	scene.fog.color.setHSL( 0.6, 0, 1 );
-	// scene.fog = new THREE.Fog(0x492762, 0.1, 200);
 
 	camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000000);
 	camera.position.set(400, 400, 1000);
@@ -63,12 +64,23 @@ function init() {
 	document.body.appendChild( renderer.domElement );
 	renderer.autoClear = false;
 
+	var listener = new THREE.AudioListener();
+	camera.add( listener );
+
+	backgroundSound = new THREE.Audio(listener);
+	backgroundSound.load('sounds/586057_Relaxed-WiP.mp3')
+	backgroundSound.position.set(400, 20, 0);
+	backgroundSound.setRefDistance(500);
+	backgroundSound.autoplay = true;
+	scene.add(backgroundSound);
+
+
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.maxPolarAngle = Math.PI/2;
 	controls.maxDistance = 4000;
 	controls.minDistance = 10;
 	// controls.autoRotate = true;
-	controls.center.set(400, 20, 0);
+	controls.center.set(400, 20, 0);	
 
 	window.addEventListener( 'resize', onWindowResize, false );
 	renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -84,7 +96,7 @@ function init() {
 function draw() {
 	var group = new THREE.Group();
 	var dmap = {};
-	var numNodes = 20;
+	var numNodes = 40;
 
 	shapes = []
 
@@ -216,7 +228,7 @@ function startOver() {
 	for (var i = 1; i < shapes.length; i++){
 		shapes[i].material.color.setHex(0x000000);
 	}
-	selected = [scene.getObjectById(33, true)]; 
+	selected = [shapes[0]];; 
 	visited = {};
 	document.getElementById('path').innerHTML = "<br><br>Node 33 is the first node (colored white).<br>Click any black node to see the shortest path.";
 }
@@ -278,8 +290,8 @@ function ground() {
 
 	groundtex.repeat.set(5, 5);
 	groundtex.wrapS = groundtex.wrapT = THREE.RepeatWrapping; 
-    groundtex.magFilter = THREE.NearestFilter;
-    groundtex.format = THREE.RGBFormat;
+    // groundtex.magFilter = THREE.NearestFilter;
+    // groundtex.format = THREE.RGBFormat;
 
 	var groundmat = new THREE.MeshPhongMaterial({map:groundtex, vertexColors: THREE.VertexColors});  //{shininess: 80, color: 0x1F0631, specular:0xffffff, vertexColors: THREE.VertexColors});
 	var ground = new THREE.Mesh(groundgeo, groundmat);
@@ -469,7 +481,7 @@ function onDocumentMouseMove( event ) {
 	raycaster.setFromCamera( mouse, camera );
 }
 
-var selected = [scene.getObjectById(33, true)];  //sets the start node
+var selected = [shapes[0]];  //sets the start node
 
 function onDocumentMouseDown( event ) {
 	event.preventDefault();
