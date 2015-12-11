@@ -203,7 +203,7 @@ function path(dgraph, start, end){
 				whattoprint += shortestpath[i] + " -> ";
 			}
 		}
-		whattoprint += "<br>Click another black node to see another path.";
+		whattoprint += "<br>Click another node to see another path.";
 		return whattoprint
 	}
 
@@ -217,7 +217,7 @@ function path(dgraph, start, end){
 	paths.push(spspline);
 
 	if (vkeys.length == shapes.length){
-		document.getElementById('path').innerHTML = "<br><br>you selected all the nodes!<br>Click <a onclick=startOver();> here </a> to play again!";
+		document.getElementById('path').innerHTML = "<br><br>you selected all the nodes.<br>Click <a onclick=startOver();> here </a> to start over or just keep playing!";
 	}
 }
 
