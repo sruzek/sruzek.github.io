@@ -230,7 +230,7 @@ function startOver() {
 	}
 	selected = [shapes[0]];
 	visited = {};
-	document.getElementById('path').innerHTML = "<br><br>Node 33 is the first node (colored white).<br>Click any black node to see the shortest path.";
+	document.getElementById('path').innerHTML = "<br><br>The first node is selected for you (colored white).<br>Click any black node to see the shortest path.";
 }
 
 function dist(t0, t1){

@@ -1,8 +1,8 @@
 ## sr640712.github.io
 
-### algorithms
+### Algorithms
 
-Visualization of Dijkstra's single-pair shortest path algorithm and optimal skip chain dynamic programming algorithm.  
+Visualization of Dijkstra's single-pair shortest path (interactive) and selection sort.   
 
 Demo: http://sr640712.github.io
 
