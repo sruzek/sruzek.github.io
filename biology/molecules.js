@@ -16,9 +16,9 @@ var molecules = [];
 var degreesToRadians = 3.14159265 / 180.0;
 
 var angle = 0;
-var waterMoleculeSelected = false;
+var waterMoleculeSelected = true;
 var hydrogenBondsSelected = false;
-var waterSelected = true;
+var waterSelected = false;
 
 function minimum(a, b) {
 	if (a < b)
