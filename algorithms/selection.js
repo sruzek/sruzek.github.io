@@ -1,4 +1,5 @@
 //selection sort algorithm
+//color palette: http://paletton.com/#uid=63k0u0kgjbwajlybWfNl99zqk6E
 // T(n) = O(n²)
 // S(n) = O(1)
 
@@ -404,9 +405,9 @@ function init() {
 	sunLight.shadowCameraBottom = -20; // CHANGED
 	sunLight.position.set( 2.5, 4, 2 );
 	// sunLight.shadowBias = -0.0002;
-	// sunLight.shadowCameraNear = 7.5;
-	// sunLight.shadowCameraFar = 40;
-	// sunLight.shadowCameraFov = 0.3;
+	sunLight.shadowCameraNear = 75;
+	sunLight.shadowCameraFar = 4000;
+	sunLight.shadowCameraFov = 500;
 	// sunLight.shadowCameraVisible = true;
 	// sunLight.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) );
 	// scene.add( sunLight );

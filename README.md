@@ -1,8 +1,8 @@
 ## sr640712.github.io
 
-### Algorithms
+### Projects
 
-Visualization of Dijkstra's single-pair shortest path (interactive) and selection sort.   
+Little projects that visualize some stuff I'm learning in school using Three.js   
 
 Demo: http://sr640712.github.io
 

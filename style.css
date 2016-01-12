@@ -3,12 +3,20 @@ body {
 	font-family:Monaco;
 	font-size:13px;
 	text-align:center;
+	padding: 10px;
 	background: linear-gradient(#9984A8, #492762);
 	margin: 0px;
 	overflow: hidden;
 }
+h3 {
+	text-align:left;
+}
 a {
 	color: #ffffff;
+}
+#bullet {
+	text-align: left;
+	padding-left: 50px;
 }
 #info {
 	color: #ffffff;
