@@ -27,7 +27,7 @@ var sort = null;
 var controls;
 var objects = [];
 var marker;
-var repeating = true;
+var repeating = false;
 var time = 0;
 
 var result;
@@ -86,21 +86,25 @@ function RotatingAnimator(first, second, path) {
 	this.animate = function (dt) {
 		if (this.done)
 			return;
+		// move the marker along the line if there are more 
+		if (!this.pathColored)
+			// numbers in the path
+			marker.translateX(dt*animationSpeed);
 
-		if (!this.pathColored)                      //move the marker along the line if there are more 
-			marker.translateX(dt*animationSpeed);   //  numbers in the path
+		//set the first number in the path to red 
+		firstObj.material.color.setHex(0xff0000);
 
-		firstObj.material.color.setHex(0xff0000);   //set the first number in the path to red 
-
-		if (path.length == 0)   //if the numbers need to swap, i.e there is no path
+		//if the numbers need to swap, i.e there is no path
+		if (path.length == 0)   
 			this.pathColored = true;
 		
-		else {  //need to color the path if its not just a swap
+		//need to color the path if its not just a swap
+		else {  
 			for (var i=0; i<path.length; i++){
 				if (marker.position.x >= path[i].obj.position.x + 1){
 					path[i].obj.material.color.setHex(0xff0000);
-				}
-				if (path[path.length-1].obj.material.color.getHex() == 16711680){  //hex num for red apparently
+				}										//hex num for red apparently
+				if (path[path.length-1].obj.material.color.getHex() == 16711680){  
 					this.pathColored = true;
 				}
 			}
@@ -250,15 +254,20 @@ function set() {
 }
 
 function reset(dt) {
-	for (var num = 0; num < objectCount; num++){       //loop to rotate all of the numbers
-		var tempobj = scene.getObjectByName(num);		
-		tempobj.material.color.setHex(0xfde4e4);       //turn all numbers same color
-		tempobj.rotation.y += dt * animationSpeed/2;   //rotate 
+	//loop to rotate all of the numbers
+	for (var num = 0; num < objectCount; num++){
+		var tempobj = scene.getObjectByName(num);
+		//turn all numbers same color		
+		tempobj.material.color.setHex(0xfde4e4);
+		//rotate 
+		tempobj.rotation.y += dt * animationSpeed/2;
 		time = time + dt;
-		if (time > 50 - (animationSpeed*2) ){   //after you're done spinning
+		//after you're done spinning
+		if (time > 50 - (animationSpeed*2) ){
 			for (var num = 0; num < objectCount; num++) {
-				var tempobj = scene.getObjectByName(num);    
-				scene.remove(tempobj);      //remove all of the numbers to reset with new ones
+				var tempobj = scene.getObjectByName(num);   
+				//remove all of the numbers to reset with new ones 
+				scene.remove(tempobj);
 			}
 			time = 0;
 			set();
@@ -266,7 +275,8 @@ function reset(dt) {
 	}
 }
 
-function createLight(color) {   //this function is from threejs.org/examples/webgl_shadowmap_pointlight.html
+//this function is from threejs.org/examples/webgl_shadowmap_pointlight.html
+function createLight(color) {   
 	var pointLight = new THREE.PointLight( color, 1, 30 );
 	pointLight.castShadow = true;
 	pointLight.shadowCameraNear = 1;
@@ -330,7 +340,7 @@ function init() {
 	 	side: THREE.BackSide
 	}),
 	skyboxMesh	= new THREE.Mesh( new THREE.CubeGeometry( 1000, 1000, 1000), material );
-	// scene.add( skyboxMesh );
+	scene.add( skyboxMesh );
 	//-------------------------------------------------------------------------------
 
 	//------------ ground and walls ---------------------------------
@@ -470,8 +480,10 @@ function update() {
 		var cmd = commands.splice(0, 1)[0];
 		animator = new RotatingAnimator(cmd.first, cmd.second, cmd.path);
 	}
-	if (animationStarted && !animator && commands.length == 0){  //the nums are sorted
-		reset(dt);   //spinny celebration then reset to a different random number sequence
+	//the nums are sorted
+	if (animationStarted && !animator && commands.length == 0){  
+		//spinny celebration then reset to a different random number sequence
+		reset(dt);   
 	}
 }
 
