@@ -7,7 +7,7 @@ var objectCount = 15;
 var columnOffset = 0.5;
 var objectSize = 0.5;
 var orbitSensitivity = 0.01;
-var orbitSpeed = 10; 
+var orbitSpeed = 10;
 
 var speedSelect = document.getElementById("speed-select");
 var sortButton = document.getElementById("sort-button");
@@ -86,25 +86,25 @@ function RotatingAnimator(first, second, path) {
 	this.animate = function (dt) {
 		if (this.done)
 			return;
-		// move the marker along the line if there are more 
+		// move the marker along the line if there are more
 		if (!this.pathColored)
 			// numbers in the path
 			marker.translateX(dt*animationSpeed);
 
-		//set the first number in the path to red 
+		//set the first number in the path to red
 		firstObj.material.color.setHex(0xff0000);
 
 		//if the numbers need to swap, i.e there is no path
-		if (path.length == 0)   
+		if (path.length == 0)
 			this.pathColored = true;
-		
+
 		//need to color the path if its not just a swap
-		else {  
+		else {
 			for (var i=0; i<path.length; i++){
 				if (marker.position.x >= path[i].obj.position.x + 1){
 					path[i].obj.material.color.setHex(0xff0000);
 				}										//hex num for red apparently
-				if (path[path.length-1].obj.material.color.getHex() == 16711680){  
+				if (path[path.length-1].obj.material.color.getHex() == 16711680){
 					this.pathColored = true;
 				}
 			}
@@ -137,7 +137,7 @@ function RotatingAnimator(first, second, path) {
 			scene.remove(pivot);
 
 
-			for (var i = 0; i < objects.length; i++){   //reset the red objects back to their 
+			for (var i = 0; i < objects.length; i++){   //reset the red objects back to their
 				var iObj = objects[i].obj;				//  original greyscale colors
 				var iVal = objects[i].value;
 				var tmp = new THREE.Color(iVal/objectCount, iVal/objectCount, iVal/objectCount);
@@ -175,7 +175,7 @@ function generateRandomIntegers(count) {
 
 function createObjectSequence(materialFactory) {
 	var ints = generateRandomIntegers(objectCount);
-	var geometry = new THREE.CylinderGeometry(0.3, 0.3, 2, 8, 1); // new THREE.SphereGeometry(0.1, 16, 16); 
+	var geometry = new THREE.CylinderGeometry(0.3, 0.3, 2, 8, 1); // new THREE.SphereGeometry(0.1, 16, 16);
 	var x = -Math.floor(ints.length / 2) * (columnOffset + objectSize);
 
 	result = [];
@@ -257,16 +257,16 @@ function reset(dt) {
 	//loop to rotate all of the numbers
 	for (var num = 0; num < objectCount; num++){
 		var tempobj = scene.getObjectByName(num);
-		//turn all numbers same color		
+		//turn all numbers same color
 		tempobj.material.color.setHex(0xfde4e4);
-		//rotate 
+		//rotate
 		tempobj.rotation.y += dt * animationSpeed/2;
 		time = time + dt;
 		//after you're done spinning
 		if (time > 50 - (animationSpeed*2) ){
 			for (var num = 0; num < objectCount; num++) {
-				var tempobj = scene.getObjectByName(num);   
-				//remove all of the numbers to reset with new ones 
+				var tempobj = scene.getObjectByName(num);
+				//remove all of the numbers to reset with new ones
 				scene.remove(tempobj);
 			}
 			time = 0;
@@ -276,7 +276,7 @@ function reset(dt) {
 }
 
 //this function is from threejs.org/examples/webgl_shadowmap_pointlight.html
-function createLight(color) {   
+function createLight(color) {
 	var pointLight = new THREE.PointLight( color, 1, 30 );
 	pointLight.castShadow = true;
 	pointLight.shadowCameraNear = 1;
@@ -319,32 +319,32 @@ function init() {
 	controls.maxDistance = 100;
 
 	//------skybox---------
-    var urlPrefix = "../images/skyboxByDad/",
-    urls = [ 
-	    	urlPrefix + "grassywater-W.png", 
-	    	urlPrefix + "grassywater-E.png",
-		    urlPrefix + "grassywater-U.png", 
-		    urlPrefix + "grassywater-D.png",
-		    urlPrefix + "grassywater-S.png", 
-		    urlPrefix + "grassywater-N.png" 
-	    ],
-	textureCube	= THREE.ImageUtils.loadTextureCube( urls ),
-	shader	= THREE.ShaderLib['cube'],
-	uniforms = THREE.UniformsUtils.clone(shader.uniforms);
-	uniforms['tCube'].value = textureCube;
-	var material = new THREE.ShaderMaterial({
-		fragmentShader	: shader.fragmentShader,
-	 	vertexShader	: shader.vertexShader,
-	 	uniforms	: uniforms,
-	 	depthWrite: false,
-	 	side: THREE.BackSide
-	}),
-	skyboxMesh	= new THREE.Mesh( new THREE.CubeGeometry( 1000, 1000, 1000), material );
-	scene.add( skyboxMesh );
+ //    var urlPrefix = "../images/skyboxByDad/",
+ //    urls = [
+	//     	urlPrefix + "grassywater-W.png",
+	//     	urlPrefix + "grassywater-E.png",
+	// 	    urlPrefix + "grassywater-U.png",
+	// 	    urlPrefix + "grassywater-D.png",
+	// 	    urlPrefix + "grassywater-S.png",
+	// 	    urlPrefix + "grassywater-N.png"
+	//     ],
+	// textureCube	= THREE.ImageUtils.loadTextureCube( urls ),
+	// shader	= THREE.ShaderLib['cube'],
+	// uniforms = THREE.UniformsUtils.clone(shader.uniforms);
+	// uniforms['tCube'].value = textureCube;
+	// var material = new THREE.ShaderMaterial({
+	// 	fragmentShader	: shader.fragmentShader,
+	//  	vertexShader	: shader.vertexShader,
+	//  	uniforms	: uniforms,
+	//  	depthWrite: false,
+	//  	side: THREE.BackSide
+	// }),
+	// skyboxMesh	= new THREE.Mesh( new THREE.CubeGeometry( 1000, 1000, 1000), material );
+	// scene.add( skyboxMesh );
 	//-------------------------------------------------------------------------------
 
 	//------------ ground and walls ---------------------------------
-	var groundgeo = new THREE.PlaneGeometry(30, 30, 1, 1);
+	var groundgeo = new THREE.PlaneGeometry(300, 300, 1, 1);
 	var groundmat = new THREE.MeshPhongMaterial({color: 0x102C2E, vertexColors: THREE.VertexColors});
 	var ground = new THREE.Mesh(groundgeo, groundmat);
 	ground.position.z = 5;
@@ -401,7 +401,7 @@ function init() {
     TdWallB2.position.y = 10;
     scene.add(TdWallB2);
     //-------------------------------------------------------------------------------
-    
+
 
 	var ambLight2 = new THREE.AmbientLight(0xac8e74);
 	scene.add(ambLight2);
@@ -481,9 +481,9 @@ function update() {
 		animator = new RotatingAnimator(cmd.first, cmd.second, cmd.path);
 	}
 	//the nums are sorted
-	if (animationStarted && !animator && commands.length == 0){  
+	if (animationStarted && !animator && commands.length == 0){
 		//spinny celebration then reset to a different random number sequence
-		reset(dt);   
+		reset(dt);
 	}
 }
 

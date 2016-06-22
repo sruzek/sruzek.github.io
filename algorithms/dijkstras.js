@@ -46,8 +46,8 @@ function init() {
     2,		// Right
     1,		// Top
     -1,	// Bottom
-    -200,            			// Near 
-   	200 );  
+    -200,            			// Near
+   	200 );
 	mapCamera.up = new THREE.Vector3(0,0,-1);
 	mapCamera.lookAt( new THREE.Vector3(0,-1,0) );
 	scene.add(mapCamera);
@@ -55,7 +55,7 @@ function init() {
 	raycaster = new THREE.Raycaster();
 	mouse = new THREE.Vector2();
 
-    renderer = new THREE.WebGLRenderer({ antialias: true }); 
+    renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	renderer.shadowMap.enabled = true;
@@ -70,7 +70,7 @@ function init() {
 	backgroundSound = new THREE.Audio(listener);
 	backgroundSound.load('sounds/586057_Relaxed-WiP.mp3')
 	backgroundSound.position.set(400, 20, 0);
-	backgroundSound.setRefDistance(500);
+	// backgroundSound.setRefDistance(500);
 	backgroundSound.autoplay = true;
 	scene.add(backgroundSound);
 
@@ -80,7 +80,7 @@ function init() {
 	controls.maxDistance = 4000;
 	controls.minDistance = 10;
 	// controls.autoRotate = true;
-	controls.center.set(400, 20, 0);	
+	controls.center.set(400, 20, 0);
 
 	window.addEventListener( 'resize', onWindowResize, false );
 	renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -107,19 +107,19 @@ function draw() {
 		if (i == 0){
 		 	temp.position.x = 500; //basepos[0] - 100;
 		 	temp.position.y =  5;
-		 	temp.position.z = 500; 
+		 	temp.position.z = 500;
 		 	temp.material.color.setHex(0xffffff);  //set the color of the starting one to white
 		}
 		else if (i == numNodes-1){
 			temp.position.x =  200;  //-300*(0.8+Math.random());
 		 	temp.position.y =  5;
-		 	temp.position.z =  -400;    // -300*(0.6+Math.random()); 
+		 	temp.position.z =  -400;    // -300*(0.6+Math.random());
 		}
 		else{
 			do{
 			 	temp.position.x = 700*1.4*Math.random()-30*1+Math.random()-i; //300 * 4 * (0.5 - Math.random()) - i;
 			 	temp.position.y =  200*Math.random();  //Math.ceil(100*Math.random());
-			 	temp.position.z = 500*1.7*(0.6-Math.random()); 
+			 	temp.position.z = 500*1.7*(0.6-Math.random());
 			} while(dist(temp.position, shapes[i-1].position) < 100);
 
 	 	}
@@ -187,7 +187,7 @@ function path(dgraph, start, end){
 		var toObj = scene.getObjectById(parseInt(to), true);
 		SPlineGeometry.vertices.push(fromObj.position, toObj.position);
 		d+=dist(fromObj.position, toObj.position);
-			
+
 		fromObj.material.color.setHex(0xffffff);
 	}
 
@@ -207,7 +207,7 @@ function path(dgraph, start, end){
 		return whattoprint
 	}
 
-	var vkeys = Object.keys(visited); 
+	var vkeys = Object.keys(visited);
 
 	console.log(visited, vkeys.length);
 
@@ -289,7 +289,7 @@ function ground() {
 	var groundtex = texloader.load('../images/marble.jpg');
 
 	groundtex.repeat.set(5, 5);
-	groundtex.wrapS = groundtex.wrapT = THREE.RepeatWrapping; 
+	groundtex.wrapS = groundtex.wrapT = THREE.RepeatWrapping;
     // groundtex.magFilter = THREE.NearestFilter;
     // groundtex.format = THREE.RGBFormat;
 
@@ -411,7 +411,7 @@ var i = 1;
 function animate() {
     requestAnimationFrame( animate );
 
-	render();		
+	render();
 	update();
 }
 
@@ -454,7 +454,7 @@ function render() {
 		light6.position.x += 750 + Math.cos( time * 0.7 ) * d;
 		light6.position.z = Math.cos( time * 0.5 ) * d;
 	}
-	
+
 	camera.updateMatrixWorld();
 
 	renderer.setViewport( 0, 0, w, h );
@@ -491,7 +491,7 @@ function onDocumentMouseDown( event ) {
 	var intersects = raycaster.intersectObjects( shapes );
 
 	if ( intersects.length > 0 ) {
-		SELECTED = intersects[ 0 ].object;	
+		SELECTED = intersects[ 0 ].object;
 		SELECTED.material.color.setHex( 0xffffff );
 		selected.push(intersects[0].object);
 		if (selected.length == 2){

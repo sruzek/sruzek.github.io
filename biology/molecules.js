@@ -42,7 +42,7 @@ function minDistOtoH(pos, val) {
 
 		var h1Pos = toGlobalCoords(molecules[i].h1);
 		var h2Pos = toGlobalCoords(molecules[i].h2);
-		
+
 		if (i != val ){
 			var tmpDist = minimum(dist(pos, h1Pos), dist(pos, h2Pos));
 			if (tmpDist == dist(pos, h1Pos)){
@@ -66,13 +66,14 @@ function minDistOtoH(pos, val) {
 
 var bonds = [];
 function hydrogenBonds() {
-	
+
 	for (var i = 0; i < molecules.length; i++){
 		var lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 1 } );
 		var lineGeometry = new THREE.Geometry();
 
-		var oPos = toGlobalCoords(molecules[i].o); //get the global position of each oxygen atom instead of local
-		
+		 //get the global position of each oxygen atom instead of local
+		var oPos = toGlobalCoords(molecules[i].o);
+
 		var closest = minDistOtoH(oPos, i);
 
 		if (closest){
@@ -105,20 +106,21 @@ function moleculesInit() {
 	var zf = 0;
 
 	for (var k = 0; k < 2; k++){
-		for (var j = 0; j < 3; j++){  //making single layer
+		//making single layer
+		for (var j = 0; j < 3; j++){
 			for (var i = 8; i < circlegeo.vertices.length - 7; i++){
 				var temp = molecule.clone();
 				temp.position.set(circlegeo.vertices[i].x+xf, circlegeo.vertices[i].y+yf+(50*Math.random()), circlegeo.vertices[i].z+zf+(50*Math.random()));
 				temp.rotation.set(Math.random()-Math.random(), Math.random()-Math.random(), Math.random()-Math.random());
-				
+
 				temp.updateMatrixWorld();      //get the positions of the individual atoms
-				var oPos = toGlobalCoords(temp.children[0]); 
-				var h1Pos = toGlobalCoords(temp.children[1]); 
-				var h2Pos = toGlobalCoords(temp.children[2]); 
+				var oPos = toGlobalCoords(temp.children[0]);
+				var h1Pos = toGlobalCoords(temp.children[1]);
+				var h2Pos = toGlobalCoords(temp.children[2]);
 				molecules.push({ obj: temp, o: temp.children[0], h1: temp.children[1], h2: temp.children[2] });
 				scene.add(temp);
 			}
-			xf += 500; 
+			xf += 500;
 			zf += 300;
 		}
 		yf += 200;
@@ -137,7 +139,7 @@ function addAtom(color, size, x, y, z, texture) {
 	if (texture) {
 		var tex = texloader.load(texture);
 		tex.repeat.set(4, 1);
-		tex.wrapS = tex.wrapT = THREE.RepeatWrapping; 
+		tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
 		var atomMat = new THREE.MeshLambertMaterial({color: color, map:tex});
 	}
 	else
@@ -153,7 +155,7 @@ function removeAll() {
 	for (var i=0; i < molecules.length; i++)
 		scene.remove(molecules[i].obj);
 	for (var j = 0; j < bonds.length; j++)
-		scene.remove(bonds[j].line);	
+		scene.remove(bonds[j].line);
 	molecules = [];
 	bonds = [];
 }
@@ -175,10 +177,12 @@ function moleculeInit() {
 	molecule.add(hydrogen1);
 	molecule.add(hydrogen2);
 	molecule.position.setY(200);
-	molecule.updateMatrixWorld();      //get the positions of the individual atoms
-	var oPos = toGlobalCoords(molecule.children[0]); 
-	var h1Pos = toGlobalCoords(molecule.children[1]); 
-	var h2Pos = toGlobalCoords(molecule.children[2]); 
+	molecule.updateMatrixWorld();
+
+	//get the positions of the individual atoms
+	var oPos = toGlobalCoords(molecule.children[0]);
+	var h1Pos = toGlobalCoords(molecule.children[1]);
+	var h2Pos = toGlobalCoords(molecule.children[2]);
 	molecules.push({ obj: molecule, o: molecule.children[0], h1: molecule.children[1], h2: molecule.children[2] });
 	scene.add(molecule);
 
@@ -196,13 +200,13 @@ function init() {
 	scene.add(camera);
 
 
-	renderer = new THREE.WebGLRenderer({ antialias: true }); 
+	renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild( renderer.domElement );
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-	
+
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.center.set(500, 200, 0);
 
@@ -270,7 +274,7 @@ function init() {
 			hydrogenBondsSelected = false;
 		}
 	});
-	
+
 	moleculeInit();
 }
 
@@ -279,7 +283,7 @@ function update() {
 
 	if (waterSelected){
 		for (var i = 0; i < molecules.length; i++){
-			var tPos = toGlobalCoords(molecule.children[0]); 
+			var tPos = toGlobalCoords(molecule.children[0]);
 			if (i%2 == 0){
 				molecules[i].obj.position.x += Math.cos(angle*degreesToRadians*3.5)*(15*Math.random());
 				molecules[i].obj.position.y += Math.cos(angle*degreesToRadians);
