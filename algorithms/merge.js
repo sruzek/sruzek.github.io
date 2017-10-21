@@ -1,5 +1,5 @@
-//ariel.js
-//graphical representation of an ariel tattoo
+//merge.js
+//graphical representation of the merge sort algorithm
 
 var scene, camera, renderer, controls;
 
