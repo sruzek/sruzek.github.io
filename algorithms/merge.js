@@ -6,21 +6,21 @@
 
 var scene, camera, renderer, controls;
 
-function skybox(){
-	var skygeo = new THREE.CubeGeometry( 2500, 2500, 2500 );
-	var cubeMaterials = [
-	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( "../images/cotton_candy/cottoncandy_ft.tga" ), side: THREE.DoubleSide }), //front side
-	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_bk.png' ), side: THREE.DoubleSide }), //back side
-	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_up.png' ), side: THREE.DoubleSide }), //up side
-	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_dn.png' ), side: THREE.DoubleSide }), //down side
-	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_rt.png' ), side: THREE.DoubleSide }), //right side
-	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_lf.png' ), side: THREE.DoubleSide }) //left side
-	];
+// function skybox(){
+// 	var skygeo = new THREE.CubeGeometry( 2500, 2500, 2500 );
+// 	var cubeMaterials = [
+// 	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( "../images/cotton_candy/cottoncandy_ft.tga" ), side: THREE.DoubleSide }), //front side
+// 	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_bk.png' ), side: THREE.DoubleSide }), //back side
+// 	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_up.png' ), side: THREE.DoubleSide }), //up side
+// 	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_dn.png' ), side: THREE.DoubleSide }), //down side
+// 	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_rt.png' ), side: THREE.DoubleSide }), //right side
+// 	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_lf.png' ), side: THREE.DoubleSide }) //left side
+// 	];
 
-	var cubeMaterial = new THREE.MeshFaceMaterial( cubeMaterials );
-	var cube = new THREE.Mesh( skygeo, cubeMaterial );
-	scene.add( cube );
-}
+// 	var cubeMaterial = new THREE.MeshFaceMaterial( cubeMaterials );
+// 	var cube = new THREE.Mesh( skygeo, cubeMaterial );
+// 	scene.add( cube );
+// }
 
 function init(){
 	scene = new THREE.Scene();
@@ -65,7 +65,7 @@ function init(){
 	ambientLight = new THREE.AmbientLight( 0xffdcdc );
 	scene.add( ambientLight );
 
-	skybox();
+	// skybox();
 }
 
 function update() {
