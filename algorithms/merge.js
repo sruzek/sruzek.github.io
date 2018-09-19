@@ -9,7 +9,7 @@ var scene, camera, renderer, controls;
 function skybox(){
 	var skygeo = new THREE.CubeGeometry( 2500, 2500, 2500 );
 	var cubeMaterials = [
-	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( "http://github.com/sruzek/sruzek.github.io/blob/master/images/skybox/posx.jpg" ), side: THREE.DoubleSide }), //front side
+	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( "../images/cotton_candy/cotton_candy_ft.tga" ), side: THREE.DoubleSide }), //front side
 	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_bk.png' ), side: THREE.DoubleSide }), //back side
 	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_up.png' ), side: THREE.DoubleSide }), //up side
 	    new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( 'https://github.com/hghazni/Three.js-Skybox/blob/master/img/nightsky_dn.png' ), side: THREE.DoubleSide }), //down side
@@ -65,7 +65,7 @@ function init(){
 	ambientLight = new THREE.AmbientLight( 0xffdcdc );
 	scene.add( ambientLight );
 
-	// skybox();
+	skybox();
 }
 
 function update() {
