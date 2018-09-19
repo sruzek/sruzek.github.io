@@ -279,7 +279,7 @@ function reset(dt) {
 function createLight(color) {
 	var pointLight = new THREE.PointLight( color, 1, 30 );
 	pointLight.castShadow = true;
-	pointLight.shadowCameraNear = 1;
+	pointLight.shadow.camera.near = 1;
 	pointLight.shadowCameraFar = 30;
 	// pointLight.shadowCameraVisible = true;
 	pointLight.shadowMapWidth = 2048;
@@ -298,8 +298,9 @@ function createLight(color) {
 function init() {
 	scene = new THREE.Scene();
 
+	scene.fog = new THREE.Fog( 0x476768, 1, 500 );
+
 	camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
-	// camera.position.x = -1;
 	camera.position.y = 10;
 	camera.position.z = 25;
 	camera.lookAt(new THREE.Vector3(-1, 0, 0));
@@ -319,7 +320,7 @@ function init() {
 	controls.maxDistance = 100;
 
 	//------skybox---------
- //    var urlPrefix = "../images/skyboxByDad/",
+ //    var urlPrefix = "../images/skyboxByDad/";
  //    urls = [
 	//     	urlPrefix + "grassywater-W.png",
 	//     	urlPrefix + "grassywater-E.png",
@@ -327,8 +328,8 @@ function init() {
 	// 	    urlPrefix + "grassywater-D.png",
 	// 	    urlPrefix + "grassywater-S.png",
 	// 	    urlPrefix + "grassywater-N.png"
-	//     ],
-	// textureCube	= THREE.ImageUtils.loadTextureCube( urls ),
+	//     ];
+	// var textureCube	= new THREE.CubeTextureLoader().load( urls );
 	// shader	= THREE.ShaderLib['cube'],
 	// uniforms = THREE.UniformsUtils.clone(shader.uniforms);
 	// uniforms['tCube'].value = textureCube;
@@ -409,15 +410,15 @@ function init() {
 	var sphere = new THREE.SphereGeometry(0.2, 16, 8 );
 	var sunLight = new THREE.DirectionalLight( 0xffffff, 1 );  // , 1.5, 0, Math.PI/2, 1 );
 	sunLight.castShadow = true;
-	sunLight.shadowCameraLeft = -20; // CHANGED
-	sunLight.shadowCameraRight = 20; // CHANGED
-	sunLight.shadowCameraTop = 20; // CHANGED
+	sunLight.shadow.camera.left = -20; // CHANGED
+	sunLight.shadow.camera.right = 20; // CHANGED
+	sunLight.shadow.camera.top = 20; // CHANGED
 	sunLight.shadowCameraBottom = -20; // CHANGED
 	sunLight.position.set( 2.5, 4, 2 );
 	// sunLight.shadowBias = -0.0002;
-	sunLight.shadowCameraNear = 75;
+	sunLight.shadow.camera.near = 75;
 	sunLight.shadowCameraFar = 4000;
-	sunLight.shadowCameraFov = 500;
+	sunLight.shadow.camera.fov = 500;
 	// sunLight.shadowCameraVisible = true;
 	// sunLight.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) );
 	// scene.add( sunLight );
