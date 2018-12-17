@@ -1,4 +1,5 @@
 // dijkstras.js
+// single pair shortest path algorithm
 
 "use strict";
 

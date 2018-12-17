@@ -1,5 +1,5 @@
-//selection sort algorithm
-//color palette: http://paletton.com/#uid=63k0u0kgjbwajlybWfNl99zqk6E
+// selection sort algorithm
+// color palette: http://paletton.com/#uid=63k0u0kgjbwajlybWfNl99zqk6E
 // T(n) = O(n²)
 // S(n) = O(1)
 
