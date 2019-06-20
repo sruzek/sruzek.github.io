@@ -69,11 +69,17 @@ function init() {
 	camera.add( listener );
 
 	backgroundSound = new THREE.Audio(listener);
-	backgroundSound.load('sounds/586057_Relaxed-WiP.mp3')
-	backgroundSound.position.set(400, 20, 0);
+	var backgroundLoader = new THREE.AudioLoader();
+	backgroundLoader.load(
+		'sounds/586057_Relaxed-WiP.mp3',
+		function(buffer) {
+			backgroundSound.setBuffer(buffer);
+			backgroundSound.play();
+		});
+	// backgroundSound.position.set(400, 20, 0);
 	// backgroundSound.setRefDistance(500);
-	backgroundSound.autoplay = true;
-	scene.add(backgroundSound);
+	// backgroundSound.autoplay = true;
+	// scene.add(backgroundSound);
 
 
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -514,4 +520,3 @@ function onDocumentMouseDown( event ) {
 		}
 	}
 }
-
