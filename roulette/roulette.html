@@ -1,0 +1,355 @@
+<html> 
+    <head>
+        <title>Home Roulette Display</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="https://www.rouletteassistant.com/wp-content/themes/roulette/img/favicon.ico">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <style id="wp-emoji-styles-inline-css" type="text/css">
+            img.wp-smiley, img.emoji {
+                display: inline !important;
+                border: none !important;
+                box-shadow: none !important;
+                height: 1em !important;
+                width: 1em !important;
+                margin: 0 0.07em !important;
+                vertical-align: -0.1em !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+        </style>
+        <style id="classic-theme-styles-inline-css" type="text/css">
+            /*! This file is auto-generated */
+            .wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+        </style>
+        <script src="https://www.rouletteassistant.com/wp-content/themes/roulette/js/jquery.min.js"></script>
+        <script src="https://www.rouletteassistant.com/wp-content/themes/roulette/js/chart.js"></script>
+        <script src="https://www.rouletteassistant.com/wp-content/themes/roulette/js/custom_free.min.js"></script>
+        <link href="https://www.rouletteassistant.com/wp-content/themes/roulette/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://www.rouletteassistant.com/wp-content/themes/roulette/style.css?v=74fe5ddss" rel="stylesheet">
+        <script src="https://www.rouletteassistant.com/wp-includes/js/wp-emoji-release.min.js?ver=6.5.3" defer=""></script>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 style="text-align:center;padding:20px;"> Pergolizzi Home Roulette Display</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container main-outer"> 
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="number-list-wrapper">
+                        <ul id="number-list">
+                            <li data-number="0">0</li>
+                            <li data-number="1">1</li>
+                            <li data-number="2">2</li>
+                            <li data-number="3">3</li>
+                            <li data-number="4">4</li>
+                            <li data-number="5">5</li>
+                            <li data-number="6">6</li>
+                            <li data-number="7">7</li>
+                            <li data-number="8">8</li>
+                            <li data-number="9">9</li>
+                            <li data-number="10">10</li>
+                            <li data-number="11">11</li>
+                            <li data-number="12">12</li>
+                            <li data-number="13">13</li>
+                            <li data-number="14">14</li>
+                            <li data-number="15">15</li>
+                            <li data-number="16">16</li>
+                            <li data-number="17">17</li>
+                            <li data-number="18">18</li>
+                            <li data-number="19">19</li>
+                            <li data-number="20">20</li>
+                            <li data-number="21">21</li>
+                            <li data-number="22">22</li>
+                            <li data-number="23">23</li>
+                            <li data-number="24">24</li>
+                            <li data-number="25">25</li>
+                            <li data-number="26">26</li>
+                            <li data-number="27">27</li>
+                            <li data-number="28">28</li>
+                            <li data-number="29">29</li>
+                            <li data-number="30">30</li>
+                            <li data-number="31">31</li>
+                            <li data-number="32">32</li>
+                            <li data-number="33">33</li>
+                            <li data-number="34">34</li>
+                            <li data-number="35">35</li>
+                            <li data-number="36">36</li>
+                        </ul>
+                        <div class="cols">
+                            <div class="col-3">Col 3</div>
+                            <div class="col-3">Col 2</div>
+                            <div class="col-3">Col 1</div>
+                        </div>
+                        <div class="outside-bets">
+                            <div class="dozen1">1st 12</div>
+                            <div class="dozen2">2nd 12</div>
+                            <div class="dozen3">3rd 12</div>
+        
+                            <div class="outside-low">1-18</div>
+                            <div class="outside-even">EVEN</div>
+                            <div class="outside-red"></div>
+                            <div class="outside-black"></div>
+                            <div class="outside-odd">ODD</div>
+                            <div class="outside-hi">19-36</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="the-history">
+                        <h2>History 
+                            <span class="history-count">(2 items)</span>
+                        </h2>
+                        <ul id="history-list">
+                            <li data-number="17">17</li>
+                            <li data-number="31">31</li>
+                        </ul>
+                        <div class="controls">
+                            <button id="clear-history-button" data-tooltip="Clear History (start over)">Clear History</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="all-stats-outer" style="display: block;">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="current-status-outer">
+                            <h2>Live Status 
+                                <span class="grey" data-tooltip="It indicates consecutive occurrences of the specific outside bet.">(times repeated):</span>
+                            </h2>
+                            <div class="current-status-table-outer">
+                                <table id="current-status">
+                                    <thead>
+                                        <tr>
+                                            <th>Number</th>
+                                            <th>Color</th>
+                                            <th>Even/Odd</th>
+                                            <th>Low/High</th>
+                                            <th>Dozen</th>
+                                            <th>Column</th>
+                                            <th>Street</th>
+                                            <th>Double Street</th>
+                                        </tr>	
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="number">
+                                                <div data-number="9">9</div>
+                                            </td>
+                                            <td class="color bg-1">Red
+                                                <span class="reps">(1x)</span>
+                                            </td>
+                                            <td class="even-odd bg-1">Odd
+                                                <span class="reps">(1x)</span>
+                                            </td>
+                                            <td class="low-high bg-1">Low
+                                                <span class="reps">(1x)</span>
+                                            </td>
+                                            <td class="dozen bg-1">1st12
+                                                <span class="reps">(1x)</span>
+                                            </td>
+                                            <td class="column bg-1">Col 3
+                                                <span class="reps">(1x)</span>
+                                            </td>
+                                            <td class="street bg-1">St 3
+                                                <span class="reps">(1x)</span>
+                                            </td>
+                                            <td class="doubleStreet bg-1">DS 2 
+                                                <span class="reps">(1x)</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="hot-cold-outer">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <h2 data-tooltip="Hot Numbers">Hot:</h2>
+                                    <div id="hot-numbers-list">
+                                        <div class="item-num" data-number="0">0</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="1">1</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="2">2</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="3">3</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="4">4</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="5">5</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="6">6</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="7">7</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="8">8</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="9">9</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="10">10</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="11">11</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="12">12</div>
+                                        <div class="item-qtd">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <h2 data-tooltip="Cold Numbers">Cold:</h2>
+                                    <div id="cold-numbers-list">
+                                        <div class="item-num" data-number="0">0</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="1">1</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="2">2</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="3">3</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="4">4</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="5">5</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="6">6</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="7">7</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="8">8</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="9">9</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="10">10</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="11">11</div>
+                                        <div class="item-qtd">0</div>
+                                        <div class="item-num" data-number="12">12</div>
+                                        <div class="item-qtd">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="stats-outer"> 
+                    <div class="col-md-4">
+                        <h2>Black/Red:</h2>
+                        <div class="box">
+                            <div>
+                                <canvas id="blackRedChart" style="box-sizing: border-box; display: block; height: 235px; width: 235px;" width="470" height="470">
+                                </canvas>
+                            </div>
+                            <div id="black-red-count" class="counters">Black: 3, Red: 1</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Low/High:</h2>
+                        <div class="box">
+                            <div>
+                                <canvas id="lowHighChart" style="box-sizing: border-box; display: block; height: 235px; width: 235px;" width="470" height="470">
+                                </canvas>
+                            </div>
+                            <div id="low-high-count" class="counters">Low: 2, High: 2</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Even/Odd:</h2>
+                        <div class="box">
+                            <div><canvas id="evenOddChart" style="box-sizing: border-box; display: block; height: 235px; width: 235px;" width="470" height="470"></canvas></div>
+                            <div id="even-odd-count" class="counters">Even: 3, Odd: 1</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h2>Dozens:</h2>
+                        <div class="box">
+                            <div><canvas id="dozenChart" style="box-sizing: border-box; display: block; height: 161px; width: 161px;" width="322" height="322"></canvas></div>
+                            <div id="first-12-count" class="counters">1st12: 2</div>
+                            <div id="second-12-count" class="counters">2nd12: 0</div>
+                            <div id="third-12-count" class="counters">3rd12: 2</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h2>Columns:</h2>
+                        <div class="box">
+                            <div><canvas id="columnChart" style="box-sizing: border-box; display: block; height: 161px; width: 161px;" width="322" height="322"></canvas></div>
+                            <div id="column-1-count" class="counters">Col 1: 2</div>
+                            <div id="column-2-count" class="counters">Col 2: 1</div>
+                            <div id="column-3-count" class="counters">Col 3: 1</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h2>Streets:</h2>
+                        <div class="box">
+                            <div><canvas id="streetChart" style="box-sizing: border-box; display: block; height: 161px; width: 161px;" width="322" height="322"></canvas></div>
+                            <div id="street-1-count" class="counters3">St 1: 0</div>
+                            <div id="street-2-count" class="counters3">St 2: 2</div>
+                            <div id="street-3-count" class="counters3">St 3: 0</div>
+                            <div id="street-4-count" class="counters3">St 4: 0</div>
+                            <div id="street-5-count" class="counters3">St 5: 3</div>
+                            <div id="street-6-count" class="counters3">St 6: 3</div>
+                            <div id="street-7-count" class="counters3">St 7: 0</div>
+                            <div id="street-8-count" class="counters3">St 8: 0</div>
+                            <div id="street-9-count" class="counters3">St 9: 0</div>
+                            <div id="street-10-count" class="counters3">St 10: 0</div>
+                            <div id="street-11-count" class="counters3">St 11: 0</div>
+                            <div id="street-12-count" class="counters3">St 12: 2</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h2>Double Streets:</h2>
+                        <div class="box">
+                            <div><canvas id="doubleStreetChart" style="box-sizing: border-box; display: block; height: 161px; width: 161px;" width="322" height="322"></canvas></div>
+                            <div id="doubleStreet-1-count" class="counters2">DS 1: 2</div>
+                            <div id="doubleStreet-2-count" class="counters2">DS 2: 0</div>
+                            <div id="doubleStreet-3-count" class="counters2">DS 3: 6</div>
+                            <div id="doubleStreet-4-count" class="counters2">DS 4: 0</div>
+                            <div id="doubleStreet-5-count" class="counters2">DS 5: 0</div>
+                            <div id="doubleStreet-6-count" class="counters2">DS 6: 2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-section">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="instructions">
+                        <h2 style="text-align:center">
+                            Unlock the Odds
+                        </h2>
+                        <p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12"><p>© Home Roulette Display by Seattle Ruzek</p></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav>
+                            <ul>
+                                <li><a>Bring a Positive Attitude</a></li>
+                                <li><a>Have a Drink</a></li>
+                                <li><a>Honor Your Bets</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+
+</html> 
