@@ -11,7 +11,7 @@ $(function () {
                   $("#copy-button").removeAttr("disabled"))
                 : ($(".all-stats-outer").hide(),
                   $("#copy-button").attr("disabled", "disabled"),
-                  $("#history-list").append('<li class="no-history">Select the number from the left hand side where the ball landed on the roulette wheel. Make smart bets.</li>')),
+                  $("#history-list").append('<li class="no-history">Select the number from the left hand side where the ball landed on the roulette wheel.</li>')),
             $(".the-history .history-count").empty(),
             $(".the-history > h2").append(' <span class="history-count">(' + e.length + " items)</span>"),
             e.length % 10 == 0 && 0 != e.length)
@@ -839,15 +839,6 @@ $(function () {
             t.push(e), localStorage.setItem("history", JSON.stringify(t)), R();
         }),
         R(),
-        document.getElementById("copy-button").addEventListener("click", function () {
-            let e = document.querySelectorAll("#history-list li"),
-                t = Array.from(e)
-                    .map((e) => e.textContent)
-                    .reverse()
-                    .join("\n"),
-                s = document.createElement("textarea");
-            (s.value = t), document.body.appendChild(s), s.select(), document.execCommand("copy"), document.body.removeChild(s), alert("Numbers copied to clipboard");
-        }),
         $("#number-input").on("input", function () {
             var e = $(this)
                 .val()
