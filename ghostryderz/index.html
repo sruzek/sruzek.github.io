@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home | Ghost Ryderz POC</title>
+
+  <!-- Motorcycle favicon (emoji as a lightweight icon) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8F%8D%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="index.html">
+          <div class="logo">🏍️</div>
+          <div class="title">
+            Ghost Ryderz POC
+            <small>Black + Orange?</small>
+          </div>
+        </a>
+
+        <nav class="tabs" aria-label="Primary navigation">
+          <a class="tab" href="about.html">About</a>
+          <a class="tab" href="events.html">Events</a>
+          <a class="tab" href="contact.html">Contact Us</a>
+          <a class="tab" href="whatever.html">Whatever</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="badge">🏍️ Simple multi-page site for Ghost Ryderz</div>
+        <h1>This is a proof of concept (POC).</h1>
+        <p>
+          This is a lightweight starter site that we can customize for Ghost Ryderz site. The header and tabs are consistent across all pages. Besides that, the content is just placeholder text to show how the layout works. We can replace it with real content, images, and links as needed.
+        </p>
+
+        <div class="actions">
+          <button class="btn primary" id="cta">Click me!</button>
+          <a class="btn" href="events.html">See Events</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Highlights">
+      <div class="card">
+        <div class="badge">Lorem Ipsum</div>
+        <h3>Section 1</h3>
+        <p>Black background, orange highlights, soft glow, and simple cards.</p>
+      </div>
+      <div class="card">
+        <div class="badge">Lorem Ipsum</div>
+        <h3>Section 2</h3>
+        <p>There can be as many sections on this page as needed. Including one, if thats the content you want to serve.</p>
+      </div>
+      <div class="card">
+        <div class="badge">Lorem Ipsum</div>
+        <h3>Section 3</h3>
+        <p>TODO: get a stylesheet of approved Ghost Ryderz branding. This includes acceptable fonts, colors, logos, sizes, etc.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Ghost Ryderz POC
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

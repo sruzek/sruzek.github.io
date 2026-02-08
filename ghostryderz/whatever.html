@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Whatever | Ghost Ryderz POC</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%8F%8D%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="index.html">
+          <div class="logo">🏍️</div>
+          <div class="title">Ghost Ryderz POC<small>Black + Orange</small></div>
+        </a>
+        <nav class="tabs" aria-label="Primary navigation">
+          <a class="tab" href="about.html">About</a>
+          <a class="tab" href="events.html">Events</a>
+          <a class="tab" href="contact.html">Contact Us</a>
+          <a class="tab" href="whatever.html">Whatever</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="badge">Whatever</div>
+        <h1>Anything goes here</h1>
+        <p>Use this page for a gallery, blog posts, FAQ, merch, or anything else.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container">© <span id="year"></span> Moto Site</div></footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

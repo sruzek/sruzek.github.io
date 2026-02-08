@@ -8,8 +8,16 @@ body {
 	margin: 0px;
 	overflow: hidden;
 }
+h1 {
+	text-align:center
+}
 h2 {
 	text-align:left;
+	padding-left: 25px;
+}
+p {
+	text-align:left;
+	padding-left: 25px;
 }
 a {
 	color: #ffffff;
